@@ -49,9 +49,11 @@
         android:layout_width="0dp"
         android:layout_height="10dp"
         android:background="#80ffff00"
+        android:visibility="invisible"
         app:layout_constraintTop_toTopOf="@id/imgTrackBar"
         app:layout_constraintBottom_toBottomOf="@id/imgTrackBar"
         app:layout_constraintStart_toStartOf="@id/imgTrackBar"
-        tools:layout_width="100dp"/>
+        tools:layout_width="100dp"
+        tools:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

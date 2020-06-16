@@ -4,19 +4,24 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.TranslateAnimation
 import androidx.constraintlayout.widget.ConstraintLayout
 import gkk.lib.android.barchart.R
 import kotlinx.android.synthetic.main.view_horizontal_bar_chart.view.*
 
 class HorizontalBarChartView: ConstraintLayout {
+    private val TAG = HorizontalBarChartView::class.java.simpleName
 
     private var maxValue: Float = 0f
+    private var minValue: Float = 0f
     private var value: Float = 0f
     private var overConditionValue: Float = 0f
     private var underConditionValue: Float = 0f
-    private var unit: Float = 0f
 
     private var trackWidth: Int = 0
     private var valueWidth: Int = 0
@@ -36,7 +41,6 @@ class HorizontalBarChartView: ConstraintLayout {
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_horizontal_bar_chart, this, true)
-
     }
 
 
@@ -73,29 +77,76 @@ class HorizontalBarChartView: ConstraintLayout {
         this.underConditionValueResId = resId
     }
 
-    fun setMaxValue(maxValue: Float) {
-        this.maxValue = maxValue
+    fun setMinValue(minValue: Float) {
+        this.minValue = minValue
+        this.underConditionValue = minValue
     }
 
-    fun drawChart(value: Float) {
-        this.value = value
+    fun setMaxValue(maxValue: Float) {
+        this.maxValue = maxValue
+        this.overConditionValue = maxValue
+    }
+
+    fun setOverConditionValue(overValue: Float) {
+        this.overConditionValue = overValue
+    }
+
+    fun setUnderConditionValue(underValue: Float) {
+        this.underConditionValue = underValue
+    }
+
+
+    fun drawChart(value: Float, animationDuration: Long = 0) {
+        this.value = if (value < minValue) minValue else value
         this.post {
             trackWidth = this.imgTrackBar.width
             valueWidth = try { ((value * trackWidth) / maxValue).toInt() } catch (error: Exception) { 0 }
+            Log.i(TAG, ">>> track w = $trackWidth\nvalue w = $valueWidth")
 
             if (valueWidth > 0) {
-                imgValueBar.visibility = View.VISIBLE
+                if (value > overConditionValue) {
+                    Log.d(TAG, ">>> overCondition")
+                    imgTrackBar.setBackgroundResource(overConditionTrackResId)
+                    imgValueBar.setBackgroundResource(overConditionValueResId)
+
+                } else if (value < underConditionValue) {
+                    Log.d(TAG, ">>> underCondition")
+                    imgTrackBar.setBackgroundResource(underConditionTrackResId)
+                    imgValueBar.setBackgroundResource(underConditionValueResId)
+
+                } else {
+                    Log.d(TAG, ">>> normal")
+                    imgTrackBar.setBackgroundResource(trackResId)
+                    imgValueBar.setBackgroundResource(valueResId)
+
+                }
                 imgValueBar.layoutParams = imgValueBar.layoutParams.apply {
                     this.width = if (valueWidth > trackWidth) trackWidth else valueWidth
                 }
-                
+                if (animationDuration > 0) {
+                    startValueAnimation(animationDuration)
+                } else {
+                    imgValueBar.visibility = View.VISIBLE
+                }
             }
         }
     }
 
 
-
-
+    private fun startValueAnimation(duration: Long) {
+        val anim = TranslateAnimation(-valueWidth.toFloat(), 0f, 0f, 0f)
+        anim.repeatMode = Animation.RESTART
+        anim.repeatCount = 0
+        anim.duration = duration
+        anim.setAnimationListener(object: Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {
+                imgValueBar.visibility = View.VISIBLE
+            }
+            override fun onAnimationRepeat(animation: Animation?) {}
+            override fun onAnimationEnd(animation: Animation?) {}
+        })
+        imgValueBar.startAnimation(anim)
+    }
 
 
 }
