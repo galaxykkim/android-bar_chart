@@ -101,21 +101,17 @@ class HorizontalBarChartView: ConstraintLayout {
         this.post {
             trackWidth = this.imgTrackBar.width
             valueWidth = try { ((value * trackWidth) / maxValue).toInt() } catch (error: Exception) { 0 }
-            Log.i(TAG, ">>> track w = $trackWidth\nvalue w = $valueWidth")
 
             if (valueWidth > 0) {
                 if (value > overConditionValue) {
-                    Log.d(TAG, ">>> overCondition")
                     imgTrackBar.setBackgroundResource(overConditionTrackResId)
                     imgValueBar.setBackgroundResource(overConditionValueResId)
 
                 } else if (value < underConditionValue) {
-                    Log.d(TAG, ">>> underCondition")
                     imgTrackBar.setBackgroundResource(underConditionTrackResId)
                     imgValueBar.setBackgroundResource(underConditionValueResId)
 
                 } else {
-                    Log.d(TAG, ">>> normal")
                     imgTrackBar.setBackgroundResource(trackResId)
                     imgValueBar.setBackgroundResource(valueResId)
 
