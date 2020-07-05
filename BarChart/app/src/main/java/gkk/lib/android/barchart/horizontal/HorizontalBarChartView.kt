@@ -99,23 +99,24 @@ class HorizontalBarChartView: ConstraintLayout {
     fun drawChart(value: Float, animationDuration: Long = 0) {
         this.value = if (value < minValue) minValue else value
         this.post {
-            trackWidth = this.imgTrackBar.width
+            trackWidth = this.layoutTrackBar.width
             valueWidth = try { ((value * trackWidth) / maxValue).toInt() } catch (error: Exception) { 0 }
 
             if (valueWidth > 0) {
                 if (value > overConditionValue) {
-                    imgTrackBar.setBackgroundResource(overConditionTrackResId)
+                    layoutTrackBar.setBackgroundResource(overConditionTrackResId)
                     imgValueBar.setBackgroundResource(overConditionValueResId)
 
                 } else if (value < underConditionValue) {
-                    imgTrackBar.setBackgroundResource(underConditionTrackResId)
+                    layoutTrackBar.setBackgroundResource(underConditionTrackResId)
                     imgValueBar.setBackgroundResource(underConditionValueResId)
 
                 } else {
-                    imgTrackBar.setBackgroundResource(trackResId)
+                    layoutTrackBar.setBackgroundResource(trackResId)
                     imgValueBar.setBackgroundResource(valueResId)
 
                 }
+                layoutTrackBar.clipToOutline = true
                 imgValueBar.layoutParams = imgValueBar.layoutParams.apply {
                     this.width = if (valueWidth > trackWidth) trackWidth else valueWidth
                 }
@@ -130,7 +131,7 @@ class HorizontalBarChartView: ConstraintLayout {
 
 
     private fun startValueAnimation(duration: Long) {
-        val anim = TranslateAnimation(-valueWidth.toFloat(), 0f, 0f, 0f)
+        val anim = TranslateAnimation(-valueWidth.toFloat(), 0f, 0f, 0f)    // val anim = ScaleAnimation(0f, 1f, 1f, 1f)
         anim.repeatMode = Animation.RESTART
         anim.repeatCount = 0
         anim.duration = duration

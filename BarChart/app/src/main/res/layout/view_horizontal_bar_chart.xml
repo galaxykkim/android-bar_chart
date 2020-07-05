@@ -35,25 +35,23 @@
         app:layout_constraintBottom_toBottomOf="@id/textLabel"
         app:layout_constraintStart_toEndOf="@id/textLabel"
         tools:visibility="visible"/>
-    <ImageView
-        android:id="@+id/imgTrackBar"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/layoutTrackBar"
+        android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="#dddddd"
         app:layout_constraintTop_toBottomOf="@id/textLabel"
         app:layout_constraintStart_toStartOf="@id/imgIcon"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"/>
-    <ImageView
-        android:id="@+id/imgValueBar"
-        android:layout_width="0dp"
-        android:layout_height="10dp"
-        android:background="#80ffff00"
-        android:visibility="invisible"
-        app:layout_constraintTop_toTopOf="@id/imgTrackBar"
-        app:layout_constraintBottom_toBottomOf="@id/imgTrackBar"
-        app:layout_constraintStart_toStartOf="@id/imgTrackBar"
-        tools:layout_width="100dp"
-        tools:visibility="visible"/>
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:id="@+id/imgValueBar"
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:background="#80ffff00"
+            android:visibility="invisible"
+            tools:layout_width="100dp"
+            tools:visibility="visible"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
