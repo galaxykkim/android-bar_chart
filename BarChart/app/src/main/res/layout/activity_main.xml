@@ -11,19 +11,19 @@
     <gkk.lib.android.barchart.horizontal.HorizontalBarChartView
         android:id="@+id/chartHorizontalBarNormal"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"/>
+        android:layout_height="wrap_content"
+        android:padding="10dp"/>
 
     <gkk.lib.android.barchart.horizontal.HorizontalBarChartView
         android:id="@+id/chartHorizontalBarOver"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"/>
+        android:layout_height="wrap_content"
+        android:padding="10dp"/>
 
     <gkk.lib.android.barchart.horizontal.HorizontalBarChartView
         android:id="@+id/chartHorizontalBarUnder"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"/>
+        android:layout_height="wrap_content"
+        android:padding="10dp"/>
 
 </LinearLayout>
