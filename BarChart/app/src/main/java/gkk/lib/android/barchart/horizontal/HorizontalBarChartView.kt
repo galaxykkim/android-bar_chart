@@ -33,9 +33,6 @@ class HorizontalBarChartView: ConstraintLayout {
     private var underConditionTrackResId: Int = 0
     private var underConditionValueResId: Int = 0
 
-
-
-
     constructor(context: Context): super(context)
     constructor(context: Context, attr: AttributeSet): super(context, attr)
 
@@ -104,12 +101,12 @@ class HorizontalBarChartView: ConstraintLayout {
 
             if (valueWidth > 0) {
                 if (value > overConditionValue) {
-                    layoutTrackBar.setBackgroundResource(overConditionTrackResId)
-                    imgValueBar.setBackgroundResource(overConditionValueResId)
+                    layoutTrackBar.setBackgroundResource(if (overConditionTrackResId != 0) overConditionTrackResId else trackResId)
+                    imgValueBar.setBackgroundResource(if (overConditionValueResId != 0) overConditionValueResId else valueResId)
 
                 } else if (value < underConditionValue) {
-                    layoutTrackBar.setBackgroundResource(underConditionTrackResId)
-                    imgValueBar.setBackgroundResource(underConditionValueResId)
+                    layoutTrackBar.setBackgroundResource(if (underConditionTrackResId != 0) underConditionTrackResId else trackResId)
+                    imgValueBar.setBackgroundResource(if (underConditionValueResId != 0) underConditionValueResId else valueResId)
 
                 } else {
                     layoutTrackBar.setBackgroundResource(trackResId)
